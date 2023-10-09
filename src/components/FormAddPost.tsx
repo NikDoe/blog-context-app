@@ -1,13 +1,11 @@
-import { useState, FormEvent } from 'react';
-import { TPost } from '../types';
+import { useState, FormEvent, useContext } from 'react';
+import { PostContext } from '../App';
 
-type FormAddPostProps = {
-	onAddPost: (post: TPost) => void;
-}
-
-function FormAddPost({ onAddPost }: FormAddPostProps) {
+function FormAddPost() {
 	const [title, setTitle] = useState('');
 	const [body, setBody] = useState('');
+
+	const { onAddPost } = useContext(PostContext);
 
 	const handleSubmit = function (e: FormEvent) {
 		e.preventDefault();

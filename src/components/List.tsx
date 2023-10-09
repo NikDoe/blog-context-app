@@ -1,10 +1,9 @@
-import { TPost } from '../types';
+import { useContext } from 'react';
+import { PostContext } from '../App';
 
-type ListProps = {
-	posts: TPost[];
-}
+function List() {
+	const { posts } = useContext(PostContext);
 
-function List({ posts }: ListProps) {
 	return (
 		<ul>
 			{posts.map((post, i) => (

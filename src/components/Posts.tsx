@@ -1,14 +1,9 @@
-import { TPost } from '../types';
 import List from './List';
 
-type PostsProps = {
-	posts: TPost[];
-}
-
-function Posts({ posts }: PostsProps) {
+function Posts() {
 	return (
 		<section>
-			<List posts={posts} />
+			<List />
 		</section>
 	);
 }

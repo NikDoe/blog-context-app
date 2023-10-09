@@ -1,10 +1,9 @@
-import { TPost } from '../types';
+import { useContext } from 'react';
+import { PostContext } from '../App';
 
-type ResultsProps = {
-	posts: TPost[];
-}
+function Results() {
+	const { posts } = useContext(PostContext);
 
-function Results({ posts }:ResultsProps) {
 	return <p>🚀 {posts.length} atomic posts found</p>;
 }
 

@@ -1,23 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
-import { TPost } from '../types';
+import { useContext } from 'react';
+import { PostContext } from '../App';
 
 import Results from './Results';
 import SearchPosts from './SearchPosts';
 
-type HeaderProps = {
-	posts: TPost[];
-	onClearPosts: () => void;
-	searchQuery: string;
-	setSearchQuery:Dispatch<SetStateAction<string>>;
-}
-
-function Header(props: HeaderProps) {
-	const { 
-		posts, 
-		onClearPosts, 
-		searchQuery, 
-		setSearchQuery 
-	} = props;
+function Header() {
+	const { onClearPosts } = useContext(PostContext);
 
 	return (
 		<header>
@@ -25,11 +13,8 @@ function Header(props: HeaderProps) {
 				<span>⚛️</span>The Atomic Blog
 			</h1>
 			<div>
-				<Results posts={posts} />
-				<SearchPosts
-					searchQuery={searchQuery}
-					setSearchQuery={setSearchQuery}
-				/>
+				<Results />
+				<SearchPosts />
 				<button onClick={onClearPosts}>Clear posts</button>
 			</div>
 		</header>

@@ -1,11 +1,21 @@
-import { useEffect, useState } from 'react';
-import { TPost } from './types';
+import { createContext, useEffect, useState } from 'react';
+import { TContextValue, TPost } from './types';
 import { createRandomPost } from './utils';
 
 import Header from './components/Header';
 import Archive from './components/Archive';
 import Footer from './components/Footer';
 import Main from './components/Main';
+
+const defaultContextValue: TContextValue = {
+	posts: [],
+	onAddPost: () => {},
+	onClearPosts: () => {},
+	searchQuery: '',
+	setSearchQuery: () => {}
+};
+
+export const PostContext = createContext<TContextValue>(defaultContextValue);
 
 function App() {
 	const [posts, setPosts] = useState(() =>
@@ -40,25 +50,32 @@ function App() {
 		[isFakeDark]
 	);
 
-	return (
-		<section>
-			<button
-				onClick={() => setIsFakeDark((isFakeDark) => !isFakeDark)}
-				className='btn-fake-dark-mode'
-			>
-				{isFakeDark ? '☀️' : '🌙'}
-			</button>
+	const contextValue: TContextValue = {
+		posts: searchedPosts,
+		onAddPost: handleAddPost,
+		onClearPosts: handleClearPosts,
+		searchQuery,
+		setSearchQuery,
+	};
 
-			<Header
-				posts={searchedPosts}
-				onClearPosts={handleClearPosts}
-				searchQuery={searchQuery}
-				setSearchQuery={setSearchQuery}
-			/>
-			<Main posts={searchedPosts} onAddPost={handleAddPost} />
-			<Archive onAddPost={handleAddPost} />
-			<Footer />
-		</section>
+	return (
+		<PostContext.Provider
+			value={contextValue}
+		>
+			<section>
+				<button
+					onClick={() => setIsFakeDark((isFakeDark) => !isFakeDark)}
+					className='btn-fake-dark-mode'
+				>
+					{isFakeDark ? '☀️' : '🌙'}
+				</button>
+
+				<Header />
+				<Main />
+				<Archive />
+				<Footer />
+			</section>
+		</PostContext.Provider>
 	);
 }
 

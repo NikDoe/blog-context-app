@@ -1,15 +1,8 @@
-import { Dispatch, SetStateAction } from 'react';
+import { useContext } from 'react';
+import { PostContext } from '../App';
 
-type SearchPostsProps = {
-	searchQuery: string;
-	setSearchQuery: Dispatch<SetStateAction<string>>;
-}
-
-function SearchPosts(props: SearchPostsProps) {
-	const {
-		searchQuery,
-		setSearchQuery
-	} = props;
+function SearchPosts() {
+	const { searchQuery, setSearchQuery } = useContext(PostContext);
 
 	return (
 		<input
