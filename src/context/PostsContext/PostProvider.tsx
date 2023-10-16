@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { PostsContext } from './PostContext';
 import { TContextValue, TPost } from '../../types';
 import { createRandomPost } from '../../utils';
@@ -30,13 +30,15 @@ export function PostsProvider({ children }: PostsProviderProps) {
 		setPosts([]);
 	}
 
-	const contextValue: TContextValue = {
-		posts: searchedPosts,
-		onAddPost: handleAddPost,
-		onClearPosts: handleClearPosts,
-		searchQuery,
-		setSearchQuery,
-	};
+	const contextValue: TContextValue = useMemo(() => {
+		return {
+			posts: searchedPosts,
+			onAddPost: handleAddPost,
+			onClearPosts: handleClearPosts,
+			searchQuery,
+			setSearchQuery,
+		};
+	}, [searchQuery, searchedPosts]);
 	
 	return (
 		<PostsContext.Provider
